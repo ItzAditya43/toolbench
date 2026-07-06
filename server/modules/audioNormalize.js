@@ -16,7 +16,7 @@ export default {
   id: "audio-normalize",
   name: "Normalize Volume",
   category: "audio",
-  icon: "≡",
+  icon: "Volume2",
   description: "Normalize audio loudness to a target level using EBU R128 (single-pass loudnorm).",
   accepts: ["audio/mpeg", "audio/wav", "audio/ogg", "audio/flac", "audio/aac", "audio/mp4"],
 

@@ -7,7 +7,7 @@ export default {
   id: "json-to-csv",
   name: "JSON → CSV",
   category: "text",
-  icon: "⇄",
+  icon: "ArrowRightLeft",
   description: "Convert a JSON file (array of objects) to CSV format.",
   accepts: ["application/json"],
 

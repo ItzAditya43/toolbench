@@ -8,7 +8,7 @@ export default {
   id: "ocr",
   name: "Image → Text (OCR)",
   category: "text",
-  icon: "▥",
+  icon: "ScanText",
   description: "Extract text from a scanned image or photo of text.",
   accepts: ["image/png", "image/jpeg", "image/webp"],
 

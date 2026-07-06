@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import * as Icons from "lucide-react";
 
 const CATEGORY_ICONS = {
-  pdf: "📄",
-  image: "🖼",
-  video: "🎬",
-  audio: "🎵",
-  text: "📝",
-  downloader: "⬇",
+  pdf: "FileText",
+  image: "Image",
+  video: "Video",
+  audio: "Music",
+  text: "FileType",
+  downloader: "Download",
 };
+
+function Icon({ name, size = 20, strokeWidth = 1.75 }) {
+  const LucideIcon = Icons[name];
+  if (!LucideIcon) return null;
+  return <LucideIcon size={size} strokeWidth={strokeWidth} />;
+}
 
 export default function CategoryGrid() {
   const [categories, setCategories] = useState([]);
@@ -44,7 +51,9 @@ export default function CategoryGrid() {
             <span className="category-count">{cat.tools.length} {cat.tools.length === 1 ? "tool" : "tools"}</span>
           </div>
           <div>
-            <div className="socket-icon">{CATEGORY_ICONS[cat.slug] || "📦"}</div>
+            <div className="socket-icon">
+              <Icon name={CATEGORY_ICONS[cat.slug] || "Box"} size={26} strokeWidth={1.5} />
+            </div>
             <div className="socket-name">{cat.name}</div>
             <div className="socket-desc">
               {cat.tools.map((t) => t.name).join(", ")}

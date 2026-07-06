@@ -7,7 +7,7 @@ export default {
   id: "video-trim",
   name: "Trim Video",
   category: "video",
-  icon: "✂",
+  icon: "Scissors",
   description: "Cut a clip from a video between a start and end timestamp.",
   accepts: ["video/mp4", "video/webm", "video/quicktime"],
 

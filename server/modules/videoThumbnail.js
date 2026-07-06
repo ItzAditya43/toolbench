@@ -7,7 +7,7 @@ export default {
   id: "video-thumbnail",
   name: "Extract Frame / Thumbnail",
   category: "video",
-  icon: "◉",
+  icon: "Image",
   description: "Extract a single frame from a video at a given timestamp.",
   accepts: ["video/mp4", "video/webm", "video/quicktime"],
 

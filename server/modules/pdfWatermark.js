@@ -8,7 +8,7 @@ export default {
   id: "pdf-watermark",
   name: "Add Watermark",
   category: "pdf",
-  icon: "℺",
+  icon: "Droplets",
   description: "Add text (page numbers, watermark) to every page of a PDF with configurable position and opacity.",
   accepts: ["application/pdf"],
 

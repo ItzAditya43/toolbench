@@ -9,7 +9,7 @@ export default {
   id: "images-to-pdf",
   name: "Images → PDF",
   category: "pdf",
-  icon: "⊡",
+  icon: "Images",
   description: "Combine multiple images into a single PDF, one image per page.",
   accepts: ["image/png", "image/jpeg", "image/webp", "image/avif", "image/tiff"],
   multiFile: true,

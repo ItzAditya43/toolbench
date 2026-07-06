@@ -8,44 +8,30 @@ export default {
   id: "pdf-compress",
   name: "Compress PDF",
   category: "pdf",
-  icon: "▤",
+  icon: "FileDown",
   description: "Shrink a PDF's file size while keeping text and layout intact.",
   accepts: ["application/pdf"],
 
-  /**
-   * pdf-lib re-serializes the PDF with object streams, which reliably shaves
-   * size off PDFs that were produced by naive writers (most "print to PDF" output).
-   * For heavier compression (image downsampling) swap this out for a call to
-   * Ghostscript, e.g.:
-   *   gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook
-   *      -dNOPAUSE -dBATCH -sOutputFile=out.pdf in.pdf
-   * via child_process — same module shape, just a different run().
-   */
-  async run({ filePath, originalName }) {
+  async run({ filePath, options }) {
+    const ext = "pdf";
+    const id = nanoid(8);
+    const outName = `${id}.${ext}`;
+    const outPath = path.join(OUTPUT_DIR, outName);
+
     const bytes = await fs.readFile(filePath);
-    const pdf = await PDFDocument.load(bytes, { updateMetadata: false });
+    const doc = await PDFDocument.load(bytes);
+    const saved = await doc.save({ useObjectStreams: true });
+    await fs.writeFile(outPath, saved);
 
-    const outBytes = await pdf.save({
-      useObjectStreams: true,
-      addDefaultPage: false,
-    });
-
-    const outputName = `compressed-${path.parse(originalName).name}.pdf`;
-    const outputPath = path.join(OUTPUT_DIR, `${nanoid(8)}-${outputName}`);
-    await fs.writeFile(outputPath, outBytes);
+    const originalSize = bytes.length;
+    const savedSize = saved.length;
+    const pct = originalSize > 0 ? Math.round((1 - savedSize / originalSize) * 100) : 0;
 
     return {
-      outputPath,
-      outputName,
+      outputPath: outPath,
+      outputName: outName,
       mimeType: "application/pdf",
-      meta: {
-        originalBytes: bytes.length,
-        outputBytes: outBytes.length,
-        savedPercent: Math.max(
-          0,
-          Math.round((1 - outBytes.length / bytes.length) * 100)
-        ),
-      },
+      meta: { savedPercent: pct },
     };
   },
 };

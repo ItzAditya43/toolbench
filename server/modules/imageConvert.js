@@ -7,7 +7,7 @@ export default {
   id: "image-convert",
   name: "Resize / Convert Image",
   category: "image",
-  icon: "▧",
+  icon: "RotateCcw",
   description: "Resize an image and/or convert it to a different format (JPG, PNG, WebP, AVIF).",
   accepts: ["image/png", "image/jpeg", "image/webp", "image/avif", "image/tiff"],
 

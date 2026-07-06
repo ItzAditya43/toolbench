@@ -7,7 +7,7 @@ export default {
   id: "youtube-download",
   name: "YouTube Downloader",
   category: "downloader",
-  icon: "▶",
+  icon: "Youtube",
   description: "Download a YouTube video or playlist, pick quality, or pull audio only.",
   accepts: ["url"],
 

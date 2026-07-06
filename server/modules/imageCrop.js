@@ -7,7 +7,7 @@ export default {
   id: "image-crop",
   name: "Crop Image",
   category: "image",
-  icon: "⊞",
+  icon: "Crop",
   description: "Crop an image by pixel coordinates or choose an aspect-ratio preset.",
   accepts: ["image/png", "image/jpeg", "image/webp", "image/avif", "image/tiff"],
 

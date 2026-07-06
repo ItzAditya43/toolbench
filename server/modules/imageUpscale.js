@@ -16,7 +16,7 @@ export default {
   id: "image-upscale",
   name: "Upscale Image",
   category: "image",
-  icon: "⊕",
+  icon: "ZoomIn",
   description: "Upscale an image 2× / 4× using Lanczos resampling (sharp). For higher quality, swap to Real-ESRGAN — see docs.",
   accepts: ["image/png", "image/jpeg", "image/webp"],
 

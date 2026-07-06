@@ -7,7 +7,7 @@ export default {
   id: "image-collage",
   name: "Collage / Merge Images",
   category: "image",
-  icon: "⊞",
+  icon: "LayoutGrid",
   description: "Combine multiple images into a simple grid collage.",
   accepts: ["image/png", "image/jpeg", "image/webp"],
   multiFile: true,

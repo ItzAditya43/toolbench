@@ -8,7 +8,7 @@ export default {
   id: "text-diff",
   name: "Diff Two Text Files",
   category: "text",
-  icon: "⇔",
+  icon: "FileDiff",
   description: "Compare two text files and produce a unified diff.",
   accepts: ["text/plain"],
   namedFiles: ["left", "right"],

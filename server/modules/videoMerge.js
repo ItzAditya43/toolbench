@@ -8,7 +8,7 @@ export default {
   id: "video-merge",
   name: "Merge / Concatenate Videos",
   category: "video",
-  icon: "⊞",
+  icon: "Combine",
   description: "Concatenate multiple video files into one. All files should have the same codec/format.",
   accepts: ["video/mp4", "video/webm", "video/quicktime"],
   multiFile: true,

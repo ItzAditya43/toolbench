@@ -49,17 +49,6 @@ export default function LandingPage() {
           </p>
 
           <CategoryGrid />
-
-          <div className="socket-grid" style={{ marginTop: 50 }}>
-            <div className="socket socket-empty">
-              <div className="plus">+</div>
-              <div>open socket — register a tool in server/modules</div>
-            </div>
-            <div className="socket socket-empty">
-              <div className="plus">+</div>
-              <div>open socket — register a tool in server/modules</div>
-            </div>
-          </div>
         </div>
       </section>
 

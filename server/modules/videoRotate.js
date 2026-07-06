@@ -7,7 +7,7 @@ export default {
   id: "video-rotate",
   name: "Rotate / Flip Video",
   category: "video",
-  icon: "↻",
+  icon: "RotateCw",
   description: "Rotate (90°, 180°, 270°) or flip (horizontal/vertical) a video.",
   accepts: ["video/mp4", "video/webm", "video/quicktime"],
 

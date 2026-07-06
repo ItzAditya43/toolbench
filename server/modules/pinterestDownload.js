@@ -16,7 +16,7 @@ export default {
   id: "pinterest-download",
   name: "Pinterest Downloader",
   category: "downloader",
-  icon: "📌",
+  icon: "Download",
   description: "Download a video or image from a Pinterest pin URL.",
   accepts: ["url"],
 

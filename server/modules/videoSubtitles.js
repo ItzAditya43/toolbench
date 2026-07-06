@@ -7,7 +7,7 @@ export default {
   id: "video-subtitles",
   name: "Add Subtitles",
   category: "video",
-  icon: "⊡",
+  icon: "Subtitles",
   description: "Burn or embed subtitles from an .srt file into a video.",
   accepts: ["video/mp4", "video/webm", "video/quicktime"],
   namedFiles: ["video", "subtitles"],

@@ -7,7 +7,7 @@ export default {
   id: "video-compress",
   name: "Compress Video",
   category: "video",
-  icon: "▣",
+  icon: "VideoOff",
   description: "Shrink a video's file size with a quality/size tradeoff slider.",
   accepts: ["video/mp4", "video/webm", "video/quicktime"],
 

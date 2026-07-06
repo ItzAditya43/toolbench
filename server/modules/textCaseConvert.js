@@ -7,7 +7,7 @@ export default {
   id: "text-case-convert",
   name: "Slugify / Case Converter",
   category: "text",
-  icon: "Aa",
+  icon: "CaseSensitive",
   description: "Convert pasted text between cases: lowercase, UPPERCASE, Title Case, camelCase, snake_case, kebab-case, slug, and more.",
   accepts: ["text"], // no file upload — text is provided via options
 

@@ -7,7 +7,7 @@ export default {
   id: "pdf-extract-text",
   name: "Extract PDF Text",
   category: "pdf",
-  icon: "📄",
+  icon: "FileSearch",
   description: "Extract selectable text from a PDF (not OCR — works only on PDFs with embedded text layers).",
   accepts: ["application/pdf"],
 

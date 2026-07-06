@@ -7,7 +7,7 @@ export default {
   id: "csv-to-json",
   name: "CSV → JSON",
   category: "text",
-  icon: "⇄",
+  icon: "ArrowLeftRight",
   description: "Convert a CSV file to JSON format.",
   accepts: ["text/csv", "application/vnd.ms-excel"],
 

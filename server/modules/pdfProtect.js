@@ -18,7 +18,7 @@ export default {
   id: "pdf-protect",
   name: "Protect / Unlock PDF",
   category: "pdf",
-  icon: "🔒",
+  icon: "Lock",
   description: "Add a password to a PDF (protect) or remove password protection (unlock, needs qpdf).",
   accepts: ["application/pdf"],
 

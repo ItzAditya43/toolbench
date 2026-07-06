@@ -16,7 +16,7 @@ export default {
   id: "pdf-to-docx",
   name: "PDF → Word",
   category: "pdf",
-  icon: "📄",
+  icon: "FileOutput",
   description: "Convert a PDF to a Word document (.docx). Requires LibreOffice installed.",
   accepts: ["application/pdf"],
 

@@ -12,7 +12,7 @@ export default {
   id: "audio-trim",
   name: "Trim Audio",
   category: "audio",
-  icon: "✂",
+  icon: "Scissors",
   description: "Cut a clip from an audio file between a start and end timestamp.",
   accepts: ["audio/mpeg", "audio/wav", "audio/ogg", "audio/flac", "audio/aac", "audio/mp4"],
 

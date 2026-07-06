@@ -57,6 +57,7 @@ import textDiff from "./modules/textDiff.js";
 import textCaseConvert from "./modules/textCaseConvert.js";
 
 import pinterestDownload from "./modules/pinterestDownload.js";
+import spotifyDownload from "./modules/spotifyDownload.js";
 
 registerModule(pdfCompress);
 registerModule(bgRemove);
@@ -105,6 +106,7 @@ registerModule(textDiff);
 registerModule(textCaseConvert);
 
 registerModule(pinterestDownload);
+registerModule(spotifyDownload);
 
 const app = express();
 app.use(cors());
@@ -213,7 +215,23 @@ app.post("/api/assist", async (req, res) => {
     const routed = await routeIntent(instruction, listModules());
     res.json(routed);
   } catch (err) {
-    res.status(503).json({ error: "Ollama isn't reachable — is it running on localhost:11434?", detail: err.message });
+    // Distinguish network-level failures from parse/logic failures
+    if (err.cause?.code === "ECONNREFUSED" || err.message?.includes("ECONNREFUSED")) {
+      res.status(503).json({
+        error: "Ollama isn't reachable — is it running on localhost:11434?",
+        detail: err.message,
+      });
+    } else if (err.message?.includes("toolId")) {
+      res.status(422).json({
+        error: "Ollama responded, but couldn't map that to a tool — try rephrasing.",
+        detail: err.message,
+      });
+    } else {
+      res.status(503).json({
+        error: "Ollama request failed: " + err.message,
+        detail: err.message,
+      });
+    }
   }
 });
 

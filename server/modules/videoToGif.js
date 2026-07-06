@@ -7,7 +7,7 @@ export default {
   id: "video-to-gif",
   name: "Video → GIF",
   category: "video",
-  icon: "▦",
+  icon: "Film",
   description: "Turn a video clip into a GIF, with a palette pass for cleaner colors.",
   accepts: ["video/mp4", "video/webm", "video/quicktime"],
 

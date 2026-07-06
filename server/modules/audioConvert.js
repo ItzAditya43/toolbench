@@ -15,7 +15,7 @@ export default {
   id: "audio-convert",
   name: "Convert Audio",
   category: "audio",
-  icon: "◈",
+  icon: "Music4",
   description: "Convert between audio formats — MP3, WAV, FLAC, OGG, AAC.",
   accepts: ["audio/mpeg", "audio/wav", "audio/flac", "audio/ogg", "audio/aac", "audio/x-m4a"],
 

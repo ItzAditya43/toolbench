@@ -7,7 +7,7 @@ export default {
   id: "audio-speed",
   name: "Change Speed / Pitch",
   category: "audio",
-  icon: "↗",
+  icon: "Gauge",
   description: "Change playback speed (without pitch shift) or pitch (without speed change) of an audio file.",
   accepts: ["audio/mpeg", "audio/wav", "audio/ogg", "audio/flac", "audio/aac"],
 

@@ -7,7 +7,7 @@ export default {
   id: "qr-generate",
   name: "QR Code Generator",
   category: "text",
-  icon: "◈",
+  icon: "QrCode",
   description: "Generate a QR code PNG from any text, URL, or input.",
   accepts: ["url"], // uses text field, not a file
 

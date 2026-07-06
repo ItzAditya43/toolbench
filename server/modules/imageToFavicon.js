@@ -11,7 +11,7 @@ export default {
   id: "image-to-favicon",
   name: "Image → Favicon / Icon Set",
   category: "image",
-  icon: "◎",
+  icon: "Star",
   description: "Generate a full favicon/icon set (16, 32, 48, 180, 192, 512 px) from a single image, delivered as a ZIP.",
   accepts: ["image/png", "image/jpeg", "image/webp"],
 

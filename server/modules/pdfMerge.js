@@ -8,7 +8,7 @@ export default {
   id: "pdf-merge",
   name: "Merge PDFs",
   category: "pdf",
-  icon: "⊞",
+  icon: "Layers",
   description: "Combine multiple PDF files into one document, preserving page order.",
   accepts: ["application/pdf"],
   multiFile: true,

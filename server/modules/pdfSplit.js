@@ -27,7 +27,7 @@ export default {
   id: "pdf-split",
   name: "Split PDF",
   category: "pdf",
-  icon: "⊧",
+  icon: "SeparatorHorizontal",
   description: "Split a PDF into separate files by page ranges or every N pages.",
   accepts: ["application/pdf"],
 

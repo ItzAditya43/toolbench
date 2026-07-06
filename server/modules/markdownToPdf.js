@@ -7,7 +7,7 @@ export default {
   id: "markdown-to-pdf",
   name: "Markdown → PDF",
   category: "text",
-  icon: "▤",
+  icon: "FileText",
   description: "Render a Markdown file (with code blocks, tables, headings) to a clean PDF.",
   accepts: ["text/markdown", "text/plain"],
 

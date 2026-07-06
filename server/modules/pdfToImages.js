@@ -17,7 +17,7 @@ export default {
   id: "pdf-to-images",
   name: "PDF → Images",
   category: "pdf",
-  icon: "⊡",
+  icon: "Image",
   description: "Render each page of a PDF to a PNG image. Requires poppler-utils (pdftoppm).",
   accepts: ["application/pdf"],
 

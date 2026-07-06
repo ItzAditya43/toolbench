@@ -8,7 +8,7 @@ export default {
   id: "audio-merge",
   name: "Merge Audio Tracks",
   category: "audio",
-  icon: "⊞",
+  icon: "Combine",
   description: "Concatenate multiple audio files into one.",
   accepts: ["audio/mpeg", "audio/wav", "audio/ogg", "audio/flac", "audio/aac"],
   multiFile: true,

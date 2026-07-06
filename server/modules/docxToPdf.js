@@ -17,7 +17,7 @@ export default {
   id: "docx-to-pdf",
   name: "Word → PDF",
   category: "pdf",
-  icon: "📝",
+  icon: "FileInput",
   description: "Convert a Word document (.docx) to PDF. Requires LibreOffice installed.",
   accepts: ["application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"],
 

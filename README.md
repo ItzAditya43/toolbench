@@ -36,6 +36,7 @@ You'll need Node 18+.
 
 - `ffmpeg` on PATH — video/audio processing (trim, merge, convert, normalize, etc.)
 - `yt-dlp` on PATH — YouTube & Pinterest downloader (`pip install yt-dlp`)
+- `spotdl` on PATH — Spotify downloader (`pip install spotdl`)
 
 ### Optional system dependencies (only for specific tools)
 
@@ -93,6 +94,7 @@ npm run dev         # http://localhost:5432, proxies /api to :4500
 | Upscale Image | `image-upscale` | image |
 | YouTube Downloader | `youtube-download` | downloader |
 | Pinterest Downloader | `pinterest-download` | downloader |
+| Spotify Downloader | `spotify-download` | downloader |
 | Trim Video | `video-trim` | video |
 | Compress Video | `video-compress` | video |
 | Video → GIF | `video-to-gif` | video |

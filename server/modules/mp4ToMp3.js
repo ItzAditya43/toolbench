@@ -7,7 +7,7 @@ export default {
   id: "mp4-to-mp3",
   name: "MP4 → MP3",
   category: "audio",
-  icon: "♪",
+  icon: "Music",
   description: "Extract the audio track from a video file as an MP3.",
   accepts: ["video/mp4", "video/webm", "video/quicktime"],
 

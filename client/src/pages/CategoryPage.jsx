@@ -1,9 +1,25 @@
 import { useEffect, useState, useCallback } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useSearchParams, Link } from "react-router-dom";
+import * as Icons from "lucide-react";
 import ToolGrid from "../components/ToolGrid.jsx";
 import ToolListCompact from "../components/ToolListCompact.jsx";
 import RunPanel from "../components/RunPanel.jsx";
 import SplitDivider from "../components/SplitDivider.jsx";
+
+const CATEGORY_ICONS = {
+  pdf: "FileText",
+  image: "Image",
+  video: "Video",
+  audio: "Music",
+  text: "FileType",
+  downloader: "Download",
+};
+
+function Icon({ name, size = 20, strokeWidth = 1.75 }) {
+  const LucideIcon = Icons[name];
+  if (!LucideIcon) return null;
+  return <LucideIcon size={size} strokeWidth={strokeWidth} />;
+}
 
 const STORAGE_KEY = "toolbench:splitWidth";
 const MIN_LEFT_PCT = 22;
@@ -12,6 +28,7 @@ const DEFAULT_LEFT_PCT = 33;
 
 export default function CategoryPage() {
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
   const [tools, setTools] = useState([]);
   const [error, setError] = useState(null);
   const [activeTool, setActiveTool] = useState(null);
@@ -33,6 +50,17 @@ export default function CategoryPage() {
       })
       .catch(() => setError("Couldn't reach the API server at :4500 — is it running?"));
   }, [slug]);
+
+  // Auto-open tool from query param (used by AI assist deep-link)
+  useEffect(() => {
+    const toolId = searchParams.get("tool");
+    if (toolId && tools.length > 0) {
+      const found = tools.find((t) => t.id === toolId);
+      if (found) {
+        setActiveTool(found);
+      }
+    }
+  }, [searchParams, tools]);
 
   const handleResize = useCallback(
     (pct) => {
@@ -61,7 +89,10 @@ export default function CategoryPage() {
         </div>
 
         <div className="section-label">category</div>
-        <h2 className="section-title">{categoryName}</h2>
+        <h2 className="section-title" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <Icon name={CATEGORY_ICONS[slug] || "Box"} size={28} strokeWidth={1.5} />
+          {categoryName}
+        </h2>
         <p className="section-desc">
           {tools.length} {tools.length === 1 ? "tool" : "tools"} in this category
         </p>

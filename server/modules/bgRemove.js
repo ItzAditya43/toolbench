@@ -7,7 +7,7 @@ export default {
   id: "bg-remove",
   name: "Remove Background",
   category: "image",
-  icon: "◐",
+  icon: "ImageMinus",
   description: "Isolate the subject of an image and drop the background to transparent.",
   accepts: ["image/png", "image/jpeg", "image/webp"],
 

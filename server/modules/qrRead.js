@@ -9,7 +9,7 @@ export default {
   id: "qr-read",
   name: "QR Code Reader",
   category: "text",
-  icon: "◈",
+  icon: "Scan",
   description: "Decode a QR code from an uploaded image.",
   accepts: ["image/png", "image/jpeg", "image/webp"],
 

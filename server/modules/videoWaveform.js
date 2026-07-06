@@ -7,7 +7,7 @@ export default {
   id: "video-waveform",
   name: "Video → Audio Waveform Image",
   category: "video",
-  icon: "∿",
+  icon: "AudioWaveform",
   description: "Generate a waveform image from a video's audio track using ffmpeg's showwavespic filter.",
   accepts: ["video/mp4", "video/webm", "video/quicktime", "audio/mpeg", "audio/wav", "audio/ogg"],
 

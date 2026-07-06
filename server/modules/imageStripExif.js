@@ -7,7 +7,7 @@ export default {
   id: "image-strip-exif",
   name: "Strip EXIF / Metadata",
   category: "image",
-  icon: "◌",
+  icon: "Eraser",
   description: "Remove all EXIF and metadata from an image — useful for privacy before sharing photos online.",
   accepts: ["image/png", "image/jpeg", "image/webp", "image/avif", "image/tiff"],
 
