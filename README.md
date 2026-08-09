@@ -57,11 +57,21 @@ You'll need Node 22+ (pdfjs-dist 6.x, used by Redact PDF and Compare PDFs, requi
 - `rembg` on PATH — Remove Background (`pip install rembg`)
 - `pdftoppm` (poppler-utils) — PDF → Images, Compare PDFs (`apt install poppler-utils` / `brew install poppler`)
 - `qpdf` — PDF unlock, PDF Repair fallback (`apt install qpdf` / `brew install qpdf`)
-- `soffice` (LibreOffice) — Word/Excel/PowerPoint ↔ PDF (`apt install libreoffice` / `brew install --cask libreoffice`)
+- `soffice` (LibreOffice) — Word/Excel → PDF, PowerPoint ↔ PDF, PDF → Word (`apt install libreoffice` / `brew install --cask libreoffice`)
 
-`pdf-lib`, `pdfjs-dist`, `pixelmatch`/`pngjs`, and `puppeteer` are plain npm deps — no
-system install needed for Organize/Page Numbers/Repair/Redact/Sign/Scan-to-PDF/Compare/HTML→PDF
+`pdf-lib`, `pdfjs-dist`, `pixelmatch`/`pngjs`, `xlsx`, and `puppeteer` are plain npm deps — no
+system install needed for Organize/Page Numbers/Repair/Redact/Sign/Scan-to-PDF/Compare/HTML→PDF/PDF→Excel
 beyond `npm install` (Puppeteer downloads its own headless Chromium on install).
+
+Note: **PDF → Excel doesn't use LibreOffice** — Calc has no PDF import filter at
+all (this is a real LibreOffice limitation, not a config issue), so it instead
+detects ruled/gridded tables via `pdf-parse`'s geometry-based extractor and
+writes them straight to a real `.xlsx`. Works well on PDFs with actual table
+grids; free-form text PDFs won't have anything to extract from (Extract PDF
+Text is the right tool there). PDF → Word and PDF → PowerPoint do use
+LibreOffice, but need an explicit `--infilter` to route through the
+Writer/Impress PDF-import path — LibreOffice's default PDF import goes to
+Draw, and a Draw document can't be exported through those filters.
 
 ### AI assist (optional)
 

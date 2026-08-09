@@ -12,7 +12,9 @@ export default {
 
   async run({ filePath, originalName }) {
     if (!filePath) throw new Error("No file uploaded");
-    const outputPath = await officeConvert({ filePath, originalName, toExt: "pptx", outputDir: OUTPUT_DIR });
+    // LibreOffice's PDF import defaults to Draw — force the Impress-compatible
+    // import path so the pptx export filter is actually available.
+    const outputPath = await officeConvert({ filePath, originalName, toExt: "pptx", outputDir: OUTPUT_DIR, infilter: "impress_pdf_import" });
     return {
       outputPath,
       outputName: path.basename(outputPath),

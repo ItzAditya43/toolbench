@@ -9,17 +9,20 @@ import { execa } from "./_execa.js";
  *
  * Dependency: LibreOffice (apt install libreoffice / brew install --cask libreoffice)
  */
-export async function officeConvert({ filePath, originalName, toExt, outputDir }) {
+export async function officeConvert({ filePath, originalName, toExt, outputDir, infilter }) {
   const outFile = `${nanoid(8)}-${path.parse(originalName || "document").name}.${toExt}`;
   const outputPath = path.join(outputDir, outFile);
 
   try {
-    await execa("soffice", [
-      "--headless",
-      "--convert-to", toExt,
-      "--outdir", outputDir,
-      filePath,
-    ]);
+    const args = ["--headless"];
+    // Converting FROM a PDF needs an explicit infilter — LibreOffice's PDF import
+    // defaults to Draw, and Draw documents can't be exported through the Writer/
+    // Impress filters. Without this, "pdf-to-X" conversions fail with a confusing
+    // "no export filter found" error even though the target format is supported.
+    if (infilter) args.push(`--infilter=${infilter}`);
+    args.push("--convert-to", toExt, "--outdir", outputDir, filePath);
+
+    await execa("soffice", args);
   } catch (err) {
     throw new Error(
       `Conversion to .${toExt} needs LibreOffice (soffice) installed locally. ` +

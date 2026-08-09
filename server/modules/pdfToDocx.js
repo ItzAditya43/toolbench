@@ -1,8 +1,6 @@
-import fs from "fs/promises";
 import path from "path";
-import { nanoid } from "nanoid";
 import { OUTPUT_DIR } from "../config.js";
-import { execa } from "./_execa.js";
+import { officeConvert } from "./_officeConvert.js";
 
 /**
  * Convert a PDF to Word (.docx) using LibreOffice headless.
@@ -22,34 +20,9 @@ export default {
 
   async run({ filePath, originalName }) {
     if (!filePath) throw new Error("No file uploaded");
-
-    const outputDir = OUTPUT_DIR;
-    const outFile = `${nanoid(8)}-${path.parse(originalName || "document").name}.docx`;
-    const outputPath = path.join(outputDir, outFile);
-
-    try {
-      await execa("soffice", [
-        "--headless",
-        "--convert-to", "docx",
-        "--outdir", outputDir,
-        filePath,
-      ]);
-    } catch (err) {
-      throw new Error(
-        "PDF → DOCX needs LibreOffice (soffice) installed locally. " +
-          "This is the heaviest dependency in the toolset — a full office suite. " +
-          "Install it with: apt install libreoffice (Linux) or brew install --cask libreoffice (macOS). " +
-          "Original error: " + err.message
-      );
-    }
-
-    // LibreOffice writes the output with the same base name in the output dir
-    const baseName = path.parse(path.basename(filePath)).name;
-    const loFile = path.join(outputDir, `${baseName}.docx`);
-
-    // Rename to our unique name
-    await fs.rename(loFile, outputPath);
-
+    // LibreOffice's PDF import defaults to Draw — force the Writer-compatible
+    // import path so the docx export filter is actually available.
+    const outputPath = await officeConvert({ filePath, originalName, toExt: "docx", outputDir: OUTPUT_DIR, infilter: "writer_pdf_import" });
     return {
       outputPath,
       outputName: path.basename(outputPath),
