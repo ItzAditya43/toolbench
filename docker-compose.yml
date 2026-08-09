@@ -1,0 +1,26 @@
+services:
+  server:
+    build: ./server
+    restart: unless-stopped
+    ports:
+      - "4500:4500"
+    volumes:
+      - toolbench-uploads:/app/uploads
+      - toolbench-outputs:/app/outputs
+    environment:
+      - PORT=4500
+      - FILE_TTL_MINUTES=60
+      - MAX_UPLOAD_MB=500
+      - OLLAMA_HOST=${OLLAMA_HOST:-http://host.docker.internal:11434}
+
+  client:
+    build: ./client
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - server
+
+volumes:
+  toolbench-uploads:
+  toolbench-outputs:

@@ -11,12 +11,22 @@ toolbench/
       registry.js      registration + lookup, no tool-specific code here
       pdfCompress.js
       bgRemove.js
-      videoDownload.js
       mp4ToMp3.js
       _execa.js         tiny child_process wrapper used by CLI-backed tools
+      _zip.js           zip helper used by multi-output tools and batch mode
+    registerAll.js     every module import + registerModule() call, shared by the
+                       server and the CLI so there's one source of truth
+    batch.js           zip-in/zip-out batch runner for single-file tools
+    purge.js           auto-deletes old uploads/outputs on a timer
+    bin/
+      cli.js            `toolbench` command — run any tool from the terminal
+      check-deps.js     reports which optional system binaries are installed
+    test/
+      smoke.test.js     run()-level smoke tests for every zero-system-dep module
     config.js          paths + env
     ollama.js           local AI helper (rename suggestions, NL routing)
     index.js            routes: /api/tools, /api/tools/:id, /api/assist, /api/download/:file
+    Dockerfile
   client/             React + Vite frontend
     src/
       components/
@@ -25,12 +35,16 @@ toolbench/
         ToolGrid.jsx            fetches /api/tools, renders the socket grid
         RunPanel.jsx             upload/run/download modal for a selected tool
         AssistBar.jsx            natural-language router, calls Ollama
+      lib/
+        clientTools.js  pure-JS ports of the "instant" tools — run in the browser
       App.jsx
+    Dockerfile
+  docker-compose.yml
 ```
 
 ## Running it
 
-You'll need Node 18+.
+You'll need Node 22+ (pdfjs-dist 6.x, used by Redact PDF and Compare PDFs, requires it).
 
 ### Required system dependencies (for most tools)
 
@@ -63,7 +77,8 @@ Meme Generator, Color Palette Extractor, Image Watermark, Add Border (sharp),
 CSV ↔ JSON, QR Code Generator/Reader, Text Diff, Case Converter, OCR, Scan → Searchable PDF,
 Markdown → PDF, HTML → PDF, JSON Formatter, Base64/URL Encode-Decode, Hash Generator,
 Word Counter, Regex Tester, UUID Generator, Lorem Ipsum Generator, Password Generator,
-Unit Converter, BMI Calculator, Barcode Generator —
+Unit Converter, BMI Calculator, Barcode Generator, Duplicate File Finder,
+Extract/Fill PDF Form Fields —
 all work with no extra system installs beyond Node and `npm install`.
 
 Note: `md-to-pdf` runs on Puppeteer, so its first run downloads a headless Chromium.
@@ -158,6 +173,87 @@ npm run dev         # http://localhost:5432, proxies /api to :4500
 | Unit Converter | `unit-convert` | utility |
 | BMI Calculator | `bmi-calculate` | utility |
 | Barcode Generator | `barcode-generate` | utility |
+| Duplicate File Finder | `duplicate-finder` | utility |
+| Extract PDF Form Fields | `pdf-form-extract` | pdf |
+| Fill PDF Form | `pdf-form-fill` | pdf |
+
+78 tools total. `⚡` marks the 11 that run **entirely client-side, offline** (see below).
+
+## Batch mode
+
+Any single-file tool (not multi-file, not URL/text-only) can process a whole
+folder at once: check "Batch mode" in the run panel, upload a `.zip` of files
+instead of one file, and get a `.zip` of results back — same options applied
+to every file, up to 200 files per run. This works for free for every
+existing and future single-file tool; there's no per-tool batch code to write.
+
+## Instant client-side tools
+
+Eleven pure-logic tools — JSON Formatter, Base64/URL Encode-Decode, Hash
+Generator, UUID Generator, Lorem Ipsum Generator, Word Counter, Regex Tester,
+Password Generator, Unit Converter, BMI Calculator — run **entirely in your
+browser** (marked with an "⚡ instant" badge in the UI). No upload, no network
+round trip, works with the server offline. See `client/src/lib/clientTools.js`.
+
+## CLI
+
+Every tool is also available from the terminal, no server required:
+
+```bash
+cd server
+npm link                                   # or: npx . <tool-id> ...
+toolbench list                             # see every tool id
+toolbench pdf-compress report.pdf -o small.pdf
+toolbench image-compress photo.jpg --quality 60
+toolbench password-generate --length 24 --count 5
+toolbench <tool-id> --help                 # see that tool's options
+```
+
+## Docker
+
+`docker compose up --build` starts both services — the server image bundles
+ffmpeg, poppler, qpdf, LibreOffice, yt-dlp, spotdl, and rembg, so every tool
+works out of the box with no manual dependency hunting. Client on `:8080`,
+API on `:4500`. Expect a large first build (~2GB image, LibreOffice is the
+biggest chunk) — that's the tradeoff for "it just works."
+
+```bash
+docker compose up --build
+```
+
+Configure via env vars in `docker-compose.yml`: `FILE_TTL_MINUTES`, `MAX_UPLOAD_MB`, `OLLAMA_HOST`.
+
+## Privacy & safety defaults
+
+- **Auto-purge**: uploaded/generated files older than `FILE_TTL_MINUTES` (default 60)
+  are deleted automatically, on top of the normal per-request cleanup.
+- **Upload size limit**: `MAX_UPLOAD_MB` (default 500) rejects oversized files with a clean error.
+- **Rate limiting**: `RATE_LIMIT_MAX_REQUESTS` per `RATE_LIMIT_WINDOW_MINUTES` per IP (default 120 / 15 min) —
+  relevant if you expose this beyond localhost.
+
+## Dependency doctor
+
+```bash
+cd server
+npm run check-deps
+```
+
+Reports exactly which optional system binaries (ffmpeg, yt-dlp, spotdl, rembg,
+pdftoppm, qpdf, soffice) are installed and which tools each one unlocks —
+instead of finding out mid-conversion.
+
+## Tests
+
+```bash
+cd server
+npm test
+```
+
+Runs smoke tests (Node's built-in test runner) against every module with zero
+system dependencies — catches the kind of silent breakage that happens when a
+dependency's API shape changes underneath you (this caught two real bugs
+during development: an `archiver` v8 API change and a `pdf-parse`/`pdfjs-dist`
+version mismatch).
 
 ## Frontend routing
 
@@ -170,16 +266,10 @@ The frontend uses `react-router-dom` v6 with two routes:
 
 ## Adding a new tool
 
-1. Create `server/modules/yourTool.js` exporting an object shaped like the existing
-   modules (`id`, `name`, `category`, `icon`, `description`, `accepts`, `async run(...)`).
-   If the tool needs extra input beyond a file (quality picker, timestamps, format
-   choice), add an `optionsSchema` array — the frontend's `RunPanel` renders fields
-   from it automatically (`text`, `select`, `checkbox` types supported). See
-   `youtubeDownload.js` or `videoTrim.js` for examples.
-2. In `server/index.js`, import it and add one line: `registerModule(yourTool);`
-3. That's it — it shows up in the socket grid, gets a working upload/run/download
-   flow with the right input fields, and is available to the Ollama-based
-   natural-language router.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide. Short version:
+write a module in `server/modules/yourTool.js`, register it with one line in
+`server/registerAll.js`, and it shows up in the UI, the CLI, batch mode, and
+the Ollama-based natural-language router automatically — no other code to touch.
 
 ## Where AI (Ollama) fits in
 

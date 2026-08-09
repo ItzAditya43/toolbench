@@ -14,11 +14,14 @@ export default {
   async run({ filePath, originalName }) {
     if (!filePath) throw new Error("No file uploaded");
 
-    // pdf-parse v2 is a named export — PDFParse is a class
+    // pdf-parse v2 is a named export — PDFParse is a class you instantiate with the data
     const { PDFParse } = await import("pdf-parse");
     const dataBuffer = await fs.readFile(filePath);
-    const pdf = await PDFParse.create(dataBuffer);
-    const data = await pdf.getData();
+    const parser = new PDFParse({ data: dataBuffer });
+    const data = await parser.getText();
+    // pdf-parse's destroy() isn't reliably compatible across pdfjs-dist versions —
+    // it's just resource cleanup, so don't let a failure here break extraction.
+    await parser.destroy().catch(() => {});
 
     const textContent = data.text || "";
     const baseName = path.parse(originalName || "extracted").name;
@@ -31,7 +34,7 @@ export default {
       outputName,
       mimeType: "text/plain",
       meta: {
-        pages: data.numpages,
+        pages: data.pages?.length,
         charCount: textContent.length,
       },
     };

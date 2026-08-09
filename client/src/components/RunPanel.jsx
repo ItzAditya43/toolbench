@@ -1,5 +1,6 @@
 import { useState } from "react";
 import * as Icons from "lucide-react";
+import { INSTANT_TOOL_IDS, runClientTool } from "../lib/clientTools.js";
 
 function Icon({ name, size = 20, strokeWidth = 1.75 }) {
   const LucideIcon = Icons[name];
@@ -25,6 +26,8 @@ export default function RunPanel({ tool, onClose }) {
   const [file, setFile] = useState(null);
   const [values, setValues] = useState(initialValues);
   const [aiRename, setAiRename] = useState(false);
+  const [batchMode, setBatchMode] = useState(false);
+  const canBatch = isFileUpload && !isMultiFile && !hasNamedFiles;
   const [status, setStatus] = useState(null);
   const [result, setResult] = useState(null);
 
@@ -36,7 +39,24 @@ export default function RunPanel({ tool, onClose }) {
     setNamedFileValues((v) => ({ ...v, [name]: fileObj }));
   }
 
+  const isInstant = INSTANT_TOOL_IDS.has(tool.id);
+
+  async function handleRunInstant() {
+    setStatus({ type: "busy", text: "running…" });
+    setResult(null);
+    try {
+      const { text, outputName, mimeType, meta } = await runClientTool(tool.id, values);
+      const blob = new Blob([text], { type: mimeType || "text/plain" });
+      const downloadUrl = URL.createObjectURL(blob);
+      setResult({ downloadUrl, outputName, meta, instantText: text });
+      setStatus({ type: "ok", text: "done — instant, ran in your browser" });
+    } catch (err) {
+      setStatus({ type: "err", text: err.message });
+    }
+  }
+
   async function handleRun() {
+    if (isInstant) return handleRunInstant();
     setStatus({ type: "busy", text: "running…" });
     setResult(null);
     try {
@@ -69,6 +89,7 @@ export default function RunPanel({ tool, onClose }) {
 
       form.append("options", JSON.stringify(values));
       form.append("aiRename", String(aiRename));
+      if (canBatch && batchMode) form.append("batchMode", "true");
 
       const res = await fetch(`/api/tools/${tool.id}`, { method: "POST", body: form });
       const data = await res.json();
@@ -111,6 +132,7 @@ export default function RunPanel({ tool, onClose }) {
         <div className="run-panel-header-left">
           <Icon name={tool.icon} size={22} strokeWidth={1.5} />
           <h3>{tool.name}</h3>
+          {isInstant && <span className="instant-badge" title="Runs entirely in your browser — no upload, works offline">⚡ instant</span>}
         </div>
         <button className="btn btn-ghost btn-close" onClick={onClose}>✕</button>
       </div>
@@ -155,8 +177,19 @@ export default function RunPanel({ tool, onClose }) {
               if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
             }}
           >
-            {file ? file.name : "drop a file here, or click to choose"}
-            <input type="file" style={{ display: "none" }} onChange={(e) => setFile(e.target.files[0])} />
+            {file
+              ? file.name
+              : batchMode
+                ? "drop a .zip of files here, or click to choose"
+                : "drop a file here, or click to choose"}
+            <input type="file" style={{ display: "none" }} accept={batchMode ? ".zip" : undefined} onChange={(e) => setFile(e.target.files[0])} />
+          </label>
+        )}
+
+        {canBatch && (
+          <label className="ai-toggle" style={{ marginTop: 8 }}>
+            <input type="checkbox" checked={batchMode} onChange={(e) => { setBatchMode(e.target.checked); setFile(null); }} />
+            Batch mode — upload a .zip, run this tool on every file inside it
           </label>
         )}
 
@@ -255,6 +288,10 @@ export default function RunPanel({ tool, onClose }) {
           {result.meta?.savedPercent != null && ` — ${result.meta.savedPercent}% smaller`}
           {result.meta?.fileCount > 1 && ` — ${result.meta.fileCount} files (playlist), first one shown`}
         </div>
+      )}
+
+      {result?.instantText && (
+        <pre className="instant-result-preview">{result.instantText}</pre>
       )}
     </div>
   );
