@@ -59,6 +59,20 @@ import textCaseConvert from "./modules/textCaseConvert.js";
 import pinterestDownload from "./modules/pinterestDownload.js";
 import spotifyDownload from "./modules/spotifyDownload.js";
 
+// --- iLovePDF-beating PDF tools ---
+import pdfOrganize from "./modules/pdfOrganize.js";
+import pdfPageNumbers from "./modules/pdfPageNumbers.js";
+import pdfRepair from "./modules/pdfRepair.js";
+import pdfRedact from "./modules/pdfRedact.js";
+import signPdf from "./modules/signPdf.js";
+import scanToPdf from "./modules/scanToPdf.js";
+import excelToPdf from "./modules/excelToPdf.js";
+import pptToPdf from "./modules/pptToPdf.js";
+import pdfToExcel from "./modules/pdfToExcel.js";
+import pdfToPpt from "./modules/pdfToPpt.js";
+import pdfCompare from "./modules/pdfCompare.js";
+import htmlToPdf from "./modules/htmlToPdf.js";
+
 registerModule(pdfCompress);
 registerModule(bgRemove);
 registerModule(youtubeDownload);
@@ -107,6 +121,19 @@ registerModule(textCaseConvert);
 
 registerModule(pinterestDownload);
 registerModule(spotifyDownload);
+
+registerModule(pdfOrganize);
+registerModule(pdfPageNumbers);
+registerModule(pdfRepair);
+registerModule(pdfRedact);
+registerModule(signPdf);
+registerModule(scanToPdf);
+registerModule(excelToPdf);
+registerModule(pptToPdf);
+registerModule(pdfToExcel);
+registerModule(pdfToPpt);
+registerModule(pdfCompare);
+registerModule(htmlToPdf);
 
 const app = express();
 app.use(cors());

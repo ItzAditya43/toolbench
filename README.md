@@ -41,9 +41,13 @@ You'll need Node 18+.
 ### Optional system dependencies (only for specific tools)
 
 - `rembg` on PATH — Remove Background (`pip install rembg`)
-- `pdftoppm` (poppler-utils) — PDF → Images (`apt install poppler-utils` / `brew install poppler`)
-- `qpdf` — PDF unlock (`apt install qpdf` / `brew install qpdf`)
-- `soffice` (LibreOffice) — Word ↔ PDF (`apt install libreoffice` / `brew install --cask libreoffice`)
+- `pdftoppm` (poppler-utils) — PDF → Images, Compare PDFs (`apt install poppler-utils` / `brew install poppler`)
+- `qpdf` — PDF unlock, PDF Repair fallback (`apt install qpdf` / `brew install qpdf`)
+- `soffice` (LibreOffice) — Word/Excel/PowerPoint ↔ PDF (`apt install libreoffice` / `brew install --cask libreoffice`)
+
+`pdf-lib`, `pdfjs-dist`, `pixelmatch`/`pngjs`, and `puppeteer` are plain npm deps — no
+system install needed for Organize/Page Numbers/Repair/Redact/Sign/Scan-to-PDF/Compare/HTML→PDF
+beyond `npm install` (Puppeteer downloads its own headless Chromium on install).
 
 ### AI assist (optional)
 
@@ -53,8 +57,10 @@ You'll need Node 18+.
 ### Zero-dependency tools (pure Node, work out of the box)
 
 Compress PDF, Merge PDFs, Split PDF, Extract PDF Text, Add Watermark, Images → PDF,
+Organize/Rotate Pages, Add Page Numbers, Repair PDF, Redact PDF, Sign PDF,
 Resize/Convert Image, Crop Image, Strip EXIF, Image → Favicon, Collage, Upscale (sharp),
-CSV ↔ JSON, QR Code Generator/Reader, Text Diff, Case Converter, OCR, Markdown → PDF —
+CSV ↔ JSON, QR Code Generator/Reader, Text Diff, Case Converter, OCR, Scan → Searchable PDF,
+Markdown → PDF, HTML → PDF —
 all work with no extra system installs beyond Node and `npm install`.
 
 Note: `md-to-pdf` runs on Puppeteer, so its first run downloads a headless Chromium.
@@ -85,6 +91,18 @@ npm run dev         # http://localhost:5432, proxies /api to :4500
 | Protect / Unlock PDF | `pdf-protect` | pdf |
 | Word → PDF | `docx-to-pdf` | pdf |
 | PDF → Word | `pdf-to-docx` | pdf |
+| Excel → PDF | `excel-to-pdf` | pdf |
+| PowerPoint → PDF | `ppt-to-pdf` | pdf |
+| PDF → Excel | `pdf-to-excel` | pdf |
+| PDF → PowerPoint | `pdf-to-ppt` | pdf |
+| Organize / Rotate Pages | `pdf-organize` | pdf |
+| Add Page Numbers | `pdf-page-numbers` | pdf |
+| Repair PDF | `pdf-repair` | pdf |
+| Redact PDF | `pdf-redact` | pdf |
+| Sign PDF | `sign-pdf` | pdf |
+| Scan → Searchable PDF | `scan-to-pdf` | pdf |
+| Compare PDFs | `pdf-compare` | pdf |
+| HTML → PDF | `html-to-pdf` | pdf |
 | Remove Background | `bg-remove` | image |
 | Resize / Convert Image | `image-convert` | image |
 | Crop Image | `image-crop` | image |

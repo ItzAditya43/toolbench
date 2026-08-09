@@ -1,7 +1,4 @@
-import fs from "fs/promises";
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const archiver = require("archiver");
+import { ZipArchive } from "archiver";
 import { createWriteStream } from "fs";
 import path from "path";
 
@@ -15,7 +12,7 @@ import path from "path";
  */
 export async function zipFiles(filePaths, outputPath) {
   return new Promise((resolve, reject) => {
-    const archive = archiver("zip", { zlib: { level: 9 } });
+    const archive = new ZipArchive({ zlib: { level: 9 } });
     const stream = createWriteStream(outputPath);
 
     archive.on("error", reject);

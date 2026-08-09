@@ -5,3 +5,4 @@ server/outputs/*
 !server/outputs/.gitkeep
 .env
 dist/
+*.traineddata
