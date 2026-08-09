@@ -58,9 +58,12 @@ beyond `npm install` (Puppeteer downloads its own headless Chromium on install).
 
 Compress PDF, Merge PDFs, Split PDF, Extract PDF Text, Add Watermark, Images → PDF,
 Organize/Rotate Pages, Add Page Numbers, Repair PDF, Redact PDF, Sign PDF,
-Resize/Convert Image, Crop Image, Strip EXIF, Image → Favicon, Collage, Upscale (sharp),
+Resize/Convert Image, Crop Image, Strip EXIF, Image → Favicon, Collage, Upscale, Compress Image,
+Meme Generator, Color Palette Extractor, Image Watermark, Add Border (sharp),
 CSV ↔ JSON, QR Code Generator/Reader, Text Diff, Case Converter, OCR, Scan → Searchable PDF,
-Markdown → PDF, HTML → PDF —
+Markdown → PDF, HTML → PDF, JSON Formatter, Base64/URL Encode-Decode, Hash Generator,
+Word Counter, Regex Tester, UUID Generator, Lorem Ipsum Generator, Password Generator,
+Unit Converter, BMI Calculator, Barcode Generator —
 all work with no extra system installs beyond Node and `npm install`.
 
 Note: `md-to-pdf` runs on Puppeteer, so its first run downloads a headless Chromium.
@@ -121,12 +124,20 @@ npm run dev         # http://localhost:5432, proxies /api to :4500
 | Rotate / Flip Video | `video-rotate` | video |
 | Video → Audio Waveform | `video-waveform` | video |
 | Add Subtitles | `video-subtitles` | video |
+| Watermark Video | `video-watermark` | video |
+| Compress GIF | `gif-compress` | video |
 | MP4 → MP3 | `mp4-to-mp3` | audio |
 | Convert Audio | `audio-convert` | audio |
 | Trim Audio | `audio-trim` | audio |
 | Merge Audio Tracks | `audio-merge` | audio |
 | Normalize Volume | `audio-normalize` | audio |
 | Change Speed / Pitch | `audio-speed` | audio |
+| Remove Silence | `audio-silence-remove` | audio |
+| Compress Image | `image-compress` | image |
+| Meme Generator | `meme-generate` | image |
+| Color Palette Extractor | `image-color-palette` | image |
+| Add Text Watermark | `image-watermark` | image |
+| Add Border / Frame | `image-add-border` | image |
 | Image → Text (OCR) | `ocr` | text |
 | Markdown → PDF | `markdown-to-pdf` | text |
 | CSV → JSON | `csv-to-json` | text |
@@ -135,6 +146,18 @@ npm run dev         # http://localhost:5432, proxies /api to :4500
 | QR Code Reader | `qr-read` | text |
 | Diff Two Text Files | `text-diff` | text |
 | Slugify / Case Converter | `text-case-convert` | text |
+| JSON Formatter / Validator | `json-format` | text |
+| Base64 Encode / Decode | `base64-convert` | text |
+| URL Encode / Decode | `url-convert` | text |
+| Hash Generator | `hash-generate` | text |
+| Word / Character Counter | `word-counter` | text |
+| Regex Tester | `regex-tester` | text |
+| UUID Generator | `uuid-generate` | utility |
+| Lorem Ipsum Generator | `lorem-ipsum-generate` | utility |
+| Password Generator | `password-generate` | utility |
+| Unit Converter | `unit-convert` | utility |
+| BMI Calculator | `bmi-calculate` | utility |
+| Barcode Generator | `barcode-generate` | utility |
 
 ## Frontend routing
 

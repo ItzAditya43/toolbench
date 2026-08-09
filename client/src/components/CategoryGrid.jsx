@@ -9,6 +9,7 @@ const CATEGORY_ICONS = {
   audio: "Music",
   text: "FileType",
   downloader: "Download",
+  utility: "Calculator",
 };
 
 function Icon({ name, size = 20, strokeWidth = 1.75 }) {

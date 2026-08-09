@@ -73,6 +73,28 @@ import pdfToPpt from "./modules/pdfToPpt.js";
 import pdfCompare from "./modules/pdfCompare.js";
 import htmlToPdf from "./modules/htmlToPdf.js";
 
+// --- everyday utility tools ---
+import jsonFormat from "./modules/jsonFormat.js";
+import base64Convert from "./modules/base64Convert.js";
+import urlConvert from "./modules/urlConvert.js";
+import hashGenerate from "./modules/hashGenerate.js";
+import uuidGenerate from "./modules/uuidGenerate.js";
+import loremIpsumGenerate from "./modules/loremIpsumGenerate.js";
+import wordCounter from "./modules/wordCounter.js";
+import regexTester from "./modules/regexTester.js";
+import passwordGenerate from "./modules/passwordGenerate.js";
+import unitConvert from "./modules/unitConvert.js";
+import bmiCalculate from "./modules/bmiCalculate.js";
+import barcodeGenerate from "./modules/barcodeGenerate.js";
+import imageCompress from "./modules/imageCompress.js";
+import memeGenerate from "./modules/memeGenerate.js";
+import imageColorPalette from "./modules/imageColorPalette.js";
+import imageWatermark from "./modules/imageWatermark.js";
+import imageAddBorder from "./modules/imageAddBorder.js";
+import audioSilenceRemove from "./modules/audioSilenceRemove.js";
+import videoWatermark from "./modules/videoWatermark.js";
+import gifCompress from "./modules/gifCompress.js";
+
 registerModule(pdfCompress);
 registerModule(bgRemove);
 registerModule(youtubeDownload);
@@ -134,6 +156,27 @@ registerModule(pdfToExcel);
 registerModule(pdfToPpt);
 registerModule(pdfCompare);
 registerModule(htmlToPdf);
+
+registerModule(jsonFormat);
+registerModule(base64Convert);
+registerModule(urlConvert);
+registerModule(hashGenerate);
+registerModule(uuidGenerate);
+registerModule(loremIpsumGenerate);
+registerModule(wordCounter);
+registerModule(regexTester);
+registerModule(passwordGenerate);
+registerModule(unitConvert);
+registerModule(bmiCalculate);
+registerModule(barcodeGenerate);
+registerModule(imageCompress);
+registerModule(memeGenerate);
+registerModule(imageColorPalette);
+registerModule(imageWatermark);
+registerModule(imageAddBorder);
+registerModule(audioSilenceRemove);
+registerModule(videoWatermark);
+registerModule(gifCompress);
 
 const app = express();
 app.use(cors());

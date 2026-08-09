@@ -195,9 +195,9 @@ export default function RunPanel({ tool, onClose }) {
       </div>
 
       {/* ── Options group ── */}
-      {schema.filter((f) => f.key !== "url" && f.key !== "text").length > 0 && (
+      {schema.filter((f) => !((isUrlOnly && f.key === "url") || (isTextOnly && f.key === "text"))).length > 0 && (
         <div className="options-group">
-          {schema.filter((f) => f.key !== "url" && f.key !== "text").map((f) => (
+          {schema.filter((f) => !((isUrlOnly && f.key === "url") || (isTextOnly && f.key === "text"))).map((f) => (
             <div className="field" key={f.key}>
               <label>{f.label}</label>
               {f.type === "select" && (
