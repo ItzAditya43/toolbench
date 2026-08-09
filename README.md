@@ -308,3 +308,7 @@ the app keeps working normally.
   install needed, but it's slower than native Tesseract on large images/batches.
 - **Markdown → PDF** uses `md-to-pdf`, which runs on Puppeteer under the hood —
   expect a one-time headless Chromium download on first run.
+
+## License
+
+[MIT](LICENSE)
